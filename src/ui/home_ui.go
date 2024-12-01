@@ -1,14 +1,12 @@
 package ui
 
 import (
-	//"github.com/charmbracelet/bubbles"
 	"fmt"
 	"gomake/builder"
 	"math"
 
 	"github.com/charmbracelet/bubbles/cursor"
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/lipgloss"
 )
 
 const TITLE = `
@@ -20,12 +18,7 @@ const TITLE = `
    \______|  \______/  |__|  |__| /__/     \__\ |__|\__\ |_______|  
   `
 
-var style = lipgloss.NewStyle().
-	Bold(true).
-	Foreground(lipgloss.Color("#7D56F4")).
-	PaddingBottom(1).
-	Border(lipgloss.RoundedBorder(), true)
-var STYLED_TITLE = style.Render(TITLE)
+var STYLED_TITLE = Title_style.Render(TITLE)
 
 type selections map[int]rune
 

@@ -23,7 +23,11 @@ func ParseArguments(s string) (*BuildArguments, error) {
 	if len(arguments) > 1 {
 		if l, exists := lang_map[arguments[0]]; exists {
 			ba.SetLang(l)
-		}
+      techs := strings.Split(arguments[1], ",") 
+       
+		} else {
+      return nil, ErrCouldNotFindLang
+    }
 	} else {
 		if l, exists := lang_map[arguments[0]]; exists {
 			ba.SetLang(l)

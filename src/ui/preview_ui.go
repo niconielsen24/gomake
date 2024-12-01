@@ -3,9 +3,9 @@ package ui
 import (
 	"fmt"
 	"gomake/builder"
+	"os"
 
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/lipgloss"
 )
 
 type preview_model struct {
@@ -30,7 +30,10 @@ func (m preview_model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		switch msg.String() {
 		case "q":
 			return m, tea.Quit
-		}
+    case "enter", " " :
+      //THIS HAS TO GO
+      _,_ = os.Create("file")
+    }
 	}
 	return m, nil
 }
@@ -40,11 +43,7 @@ func (m preview_model) View() string {
   lang := m.build.GetLang()
   techs := m.build.GetTechs()
   
-  preview_subtitle_style := lipgloss.NewStyle().
-    Bold(true).Padding(0,1,0,1).
-    Background(lipgloss.Color("#FFFFFF")).
-    Foreground(lipgloss.Color("#000000"))
-  var subtitle = preview_subtitle_style.Render("Your current build :")
+  var subtitle = Subtitle_style.Render("Your current build :")
   s+= fmt.Sprintf("\n%s \n Language : %s\n",subtitle,lang)
   for i:= range len(techs) {
     s += fmt.Sprintf(" | %v : %s\n",i,techs[i])
