@@ -2,10 +2,9 @@ package ui
 
 import (
 	"fmt"
+	"gomake/ui/models"
 
-	"github.com/charmbracelet/bubbles/viewport"
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/lipgloss"
 )
 
 const TITLE = `
@@ -22,21 +21,15 @@ var STYLED_TITLE = Title_style.Render(TITLE)
 type selections map[int]rune
 
 type home_model struct {
-	title string
-	left  viewport.Model
-	right viewport.Model
+	title     string
+	status    string
+	templates tea.Model
 }
 
 func InitialHomeModel() home_model {
-  left := viewport.New(5,2)
-  left.Style = lipgloss.NewStyle().Border(lipgloss.DoubleBorder(),true)
-  right := viewport.New(5,2)
-  right.Style = lipgloss.NewStyle().Border(lipgloss.DoubleBorder(),true)
-
 	return home_model{
-		title: STYLED_TITLE,
-		left:  left,
-		right: right,
+		title:     STYLED_TITLE,
+		templates: models.InitialTemplSelec(),
 	}
 }
 
@@ -50,14 +43,17 @@ func (m home_model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		switch msg.String() {
 		case "q":
 			return m, tea.Quit
+		case " ":
 		}
 	}
-	return m, nil
+  nt, cmd := m.templates.Update(msg)
+  m.templates = nt
+	return m, cmd
 }
 
 func (m home_model) View() string {
 	s := m.title + "\n"
-	s += fmt.Sprintf("%s%s", m.left.View(), m.right.View())
+	s += fmt.Sprintf("%s", m.templates.View())
 
 	return s
 }

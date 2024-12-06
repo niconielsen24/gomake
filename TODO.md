@@ -18,5 +18,4 @@ templetas : should be just a predefined build that jumps straight to
 - building -> should be an interface which provides the Build() methods
               maybe also  : BuildWithModules(string...)
                             BuildWithLib(string...)
-              also building is not a really good name, as we are no really 
-              building anything
+              Should use a build_config type
